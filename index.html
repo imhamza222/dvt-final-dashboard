@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atlas of Nations &mdash; Wealth, Health &amp; Population, 1952&ndash;2007</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="grain"></div>
+
+<header class="site-header">
+  <div class="header-inner">
+    <p class="eyebrow">Data Visualization Techniques &middot; DSC327</p>
+    <h1>Atlas of Nations</h1>
+    <p class="thesis">Fifty-five years of wealth, health and population across 142 countries &mdash; turn the dial to watch the world move.</p>
+  </div>
+</header>
+
+<main>
+
+  <!-- ============ SECTION 1: The Time Machine (signature scatter) ============ -->
+  <section class="panel hero-panel" id="explorer">
+    <div class="panel-head">
+      <h2>The Wealth &amp; Health of Nations</h2>
+      <p class="panel-sub">Each circle is a country. Position shows income and life expectancy; size shows population; color shows continent.</p>
+    </div>
+
+    <div class="explorer-layout">
+
+      <!-- Controls sidebar -->
+      <aside class="controls">
+
+        <div class="control-block">
+          <span class="control-label">Continents</span>
+          <div id="legend" class="legend"></div>
+        </div>
+
+        <div class="control-block">
+          <span class="control-label">Search a country</span>
+          <input id="country-search" type="text" placeholder="e.g. Pakistan" list="country-list" autocomplete="off">
+          <datalist id="country-list"></datalist>
+        </div>
+
+        <div class="control-block">
+          <span class="control-label">Axes</span>
+          <label class="mini-label" for="x-axis-select">X axis</label>
+          <select id="x-axis-select">
+            <option value="gdpPercap" selected>GDP per capita</option>
+            <option value="lifeExp">Life expectancy</option>
+            <option value="pop">Population</option>
+          </select>
+          <label class="mini-label" for="y-axis-select">Y axis</label>
+          <select id="y-axis-select">
+            <option value="lifeExp" selected>Life expectancy</option>
+            <option value="gdpPercap">GDP per capita</option>
+            <option value="pop">Population</option>
+          </select>
+        </div>
+
+        <div class="control-block">
+          <span class="control-label">Zoom</span>
+          <div class="zoom-row">
+            <button id="zoom-reset" class="btn-ghost">Reset zoom</button>
+          </div>
+          <p class="hint">Scroll or pinch on the chart to zoom. Drag to pan.</p>
+        </div>
+
+      </aside>
+
+      <!-- Chart + scrubber -->
+      <div class="chart-wrap">
+        <div id="scatter-tooltip" class="tooltip" hidden></div>
+        <svg id="scatter" aria-label="Scatter plot of GDP per capita versus life expectancy"></svg>
+
+        <div class="dial">
+          <button id="play-btn" class="btn-play" aria-label="Play animation through years">
+            <svg id="play-icon" width="14" height="14" viewBox="0 0 14 14"><polygon points="2,1 13,7 2,13" fill="currentColor"/></svg>
+            <svg id="pause-icon" width="14" height="14" viewBox="0 0 14 14" hidden><rect x="2" y="1" width="3.5" height="12" fill="currentColor"/><rect x="8.5" y="1" width="3.5" height="12" fill="currentColor"/></svg>
+          </button>
+          <input type="range" id="year-slider" min="0" max="11" step="1" value="11">
+          <span id="year-readout" class="year-readout">2007</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============ SECTION 2: Ranking bar chart ============ -->
+  <section class="panel" id="ranking">
+    <div class="panel-head">
+      <h2>Who Leads, Who Lags</h2>
+      <p class="panel-sub">Top and bottom countries for the selected year and measure. Click a bar to trace its history below.</p>
+    </div>
+    <div class="ranking-controls">
+      <label class="mini-label" for="rank-metric">Rank by</label>
+      <select id="rank-metric">
+        <option value="lifeExp">Life expectancy</option>
+        <option value="gdpPercap">GDP per capita</option>
+        <option value="pop">Population</option>
+      </select>
+      <div class="seg-toggle" id="rank-direction">
+        <button class="seg-btn active" data-dir="top">Top 10</button>
+        <button class="seg-btn" data-dir="bottom">Bottom 10</button>
+      </div>
+    </div>
+    <svg id="bars" aria-label="Bar chart ranking countries"></svg>
+  </section>
+
+  <!-- ============ SECTION 3: Trend line ============ -->
+  <section class="panel" id="trend">
+    <div class="panel-head">
+      <h2>A Country&rsquo;s Path Through Time</h2>
+      <p class="panel-sub">Select a country to trace its trajectory from 1952 to 2007.</p>
+    </div>
+    <div class="trend-controls">
+      <label class="mini-label" for="trend-country">Country</label>
+      <select id="trend-country"></select>
+      <label class="mini-label" for="trend-metric">Measure</label>
+      <select id="trend-metric">
+        <option value="lifeExp">Life expectancy</option>
+        <option value="gdpPercap">GDP per capita</option>
+        <option value="pop">Population</option>
+      </select>
+    </div>
+    <svg id="line" aria-label="Line chart showing a country's trend over time"></svg>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <p>Built with D3.js for DSC327 &middot; Dataset: Gapminder (1952&ndash;2007, 142 countries, 1704 records)</p>
+</footer>
+
+<script src="vendor/d3.v7.min.js"></script>
+<script src="js/data.js"></script>
+<script src="js/script.js"></script>
+</body>
+</html>
